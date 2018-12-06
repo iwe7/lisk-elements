@@ -131,7 +131,7 @@ describe('errors', () => {
 					.which.is.eql(peerId);
 			});
 
-			it('should set error property info when passed as an argument', () => {
+			it('should set error property cause when passed as an argument', () => {
 				expect(rpcGetPeersFailed)
 					.and.to.have.property('cause')
 					.and.to.be.a('function');

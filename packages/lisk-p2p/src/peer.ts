@@ -82,6 +82,11 @@ export class Peer {
 	}
 	/* tslint:disable:promise-function-async prefer-function-over-method no-unused-variable */
 	public async request(data: RPCRequest<any>): Promise<RPCResponse<any>> {
+		// TODO: Resolving and rejecting for testing
+		if (!data) {
+			return Promise.reject(new Error('No data Error'));
+		}
+
 		return Promise.resolve({ data: [] });
 	}
 }
