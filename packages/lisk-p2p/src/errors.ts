@@ -32,7 +32,7 @@ export class NotEnoughPeersError extends VError {
 	}
 }
 
-export class RPCGetPeersFailed extends VError {
+export class RPCGetPeersFailedError extends VError {
 	public peerId: string;
 
 	public constructor(message: string, cause: Error, peerId: string) {
