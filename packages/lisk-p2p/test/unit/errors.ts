@@ -125,24 +125,10 @@ describe('errors', () => {
 				return Promise.resolve();
 			});
 
-			it('should set error property info when passed as an argument', () => {
+			it('should set error property peerId when passed as an argument', () => {
 				return expect(rpcGetPeersFailed)
 					.and.to.have.property('peerId')
 					.which.is.eql(peerId);
-			});
-
-			it('should set error property info when passed as an argument', () => {
-				return expect(rpcGetPeersFailed)
-					.and.to.have.property('peerId')
-					.which.is.eql(peerId);
-			});
-
-			it('should set error property info when passed as an argument', () => {
-				expect(rpcGetPeersFailed)
-					.and.to.have.property('cause')
-					.and.to.be.a('function');
-
-				return expect(rpcGetPeersFailed.cause()).is.instanceOf(Error);
 			});
 
 			it('should set error property info when passed as an argument', () => {
