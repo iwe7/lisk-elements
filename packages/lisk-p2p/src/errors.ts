@@ -31,3 +31,13 @@ export class NotEnoughPeersError extends VError {
 		this.name = 'NotEnoughPeersError';
 	}
 }
+
+export class RPCGetPeersFailed extends VError {
+	public peerId: string;
+
+	public constructor(message: string, cause: Error, peerId: string) {
+		super(cause, message);
+		this.name = 'RPCGetPeersFailed';
+		this.peerId = peerId;
+	}
+}

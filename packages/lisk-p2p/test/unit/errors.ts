@@ -13,7 +13,11 @@
  *
  */
 import { expect } from 'chai';
-import { NotEnoughPeersError, PeerTransportError } from '../../src';
+import {
+	NotEnoughPeersError,
+	PeerTransportError,
+	RPCGetPeersFailed,
+} from '../../src';
 
 describe('errors', () => {
 	describe('#NotEnoughPeersError', () => {
@@ -80,6 +84,76 @@ describe('errors', () => {
 
 			it('should set error property peerId when passed as an argument', () => {
 				return expect(peerTransportError.peerId).to.eql(peerId);
+			});
+		});
+	});
+
+	describe('#RPCGetPeersFailed', () => {
+		let rpcGetPeersFailed: RPCGetPeersFailed;
+		const peerId = '127.0.0.1:5001';
+		const defaultMessage = `Error when fetching peerlist of peer with peer id ${peerId}`;
+		const defaultError = new Error('Peer not available');
+
+		beforeEach(() => {
+			rpcGetPeersFailed = new RPCGetPeersFailed(
+				defaultMessage,
+				defaultError,
+				peerId,
+			);
+			return Promise.resolve();
+		});
+
+		describe('should create an error object', () => {
+			it('should create a new instance of RPCGetPeersFailed', () => {
+				return expect(rpcGetPeersFailed)
+					.to.be.an('object')
+					.and.be.instanceof(RPCGetPeersFailed);
+			});
+
+			it('should set error name to `RPCGetPeersFailed`', () => {
+				return expect(rpcGetPeersFailed.name).to.eql('RPCGetPeersFailed');
+			});
+		});
+
+		describe('should set error object properties', () => {
+			beforeEach(() => {
+				rpcGetPeersFailed = new RPCGetPeersFailed(
+					defaultMessage,
+					defaultError,
+					peerId,
+				);
+				return Promise.resolve();
+			});
+
+			it('should set error property info when passed as an argument', () => {
+				return expect(rpcGetPeersFailed)
+					.and.to.have.property('peerId')
+					.which.is.eql(peerId);
+			});
+
+			it('should set error property info when passed as an argument', () => {
+				return expect(rpcGetPeersFailed)
+					.and.to.have.property('peerId')
+					.which.is.eql(peerId);
+			});
+
+			it('should set error property info when passed as an argument', () => {
+				expect(rpcGetPeersFailed)
+					.and.to.have.property('cause')
+					.and.to.be.a('function');
+
+				return expect(rpcGetPeersFailed.cause()).is.instanceOf(Error);
+			});
+
+			it('should set error property info when passed as an argument', () => {
+				expect(rpcGetPeersFailed)
+					.and.to.have.property('cause')
+					.and.to.be.a('function');
+
+				return expect(rpcGetPeersFailed.cause())
+					.is.instanceOf(Error)
+					.has.property('message')
+					.and.eql('Peer not available');
 			});
 		});
 	});
