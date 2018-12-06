@@ -17,6 +17,14 @@ import { PeerState } from './p2p_types';
 
 // TODO: Use to create outbound socket connection inside peer object.
 // TODO: const socketClusterClient = require('socketcluster-client');
+export interface RPCRequest<T> {
+	readonly params?: T;
+	readonly procedure: string;
+}
+
+export interface RPCResponse<T> {
+	readonly data: T;
+}
 
 export interface PeerConfig {
 	readonly clock?: Date;
@@ -71,5 +79,9 @@ export class Peer {
 
 	public get wsPort(): number {
 		return this._wsPort;
+	}
+	/* tslint:disable:promise-function-async prefer-function-over-method no-unused-variable */
+	public async request(data: RPCRequest<any>): Promise<RPCResponse<any>> {
+		return Promise.resolve({ data: [] });
 	}
 }
