@@ -21,7 +21,7 @@ import {
 } from '../../src/utils';
 // The list of valid transactions was created with lisk-js v0.5.1
 // using the below mentioned passphrases.
-import fixtureTransactions from '../../fixtures/transactions.json';
+import * as fixtureTransactions from '../../fixtures/transactions.json';
 import {
 	PartialTransaction,
 	BaseTransaction,
