@@ -17,13 +17,18 @@ import { PeerState } from './p2p_types';
 
 // TODO: Use to create outbound socket connection inside peer object.
 // TODO: const socketClusterClient = require('socketcluster-client');
-export interface RPCRequest<T> {
+export interface P2PRequestPacket<T> {
 	readonly params?: T;
 	readonly procedure: string;
 }
 
-export interface RPCResponse<T> {
+export interface P2PResponsePacket {
+	readonly data: unknown;
+}
+
+export interface P2PMessagePacket<T> {
 	readonly data: T;
+	readonly event: string;
 }
 
 export interface PeerConfig {
@@ -34,6 +39,7 @@ export interface PeerConfig {
 	readonly inboundSocket?: any; // TODO: Type SCServerSocket
 	readonly ipAddress: string;
 	readonly os?: string;
+	readonly outboundSocket?: any; // TODO: Type SCServerSocket
 	readonly version?: string;
 	readonly wsPort: number;
 }
@@ -43,6 +49,7 @@ export class Peer {
 	private readonly _id: string;
 	private readonly _inboundSocket: any;
 	private readonly _ipAddress: string;
+	private readonly _outboundSocket: any;
 	private readonly _wsPort: number;
 
 	public constructor(peerConfig: PeerConfig) {
@@ -50,6 +57,7 @@ export class Peer {
 		this._ipAddress = peerConfig.ipAddress;
 		this._wsPort = peerConfig.wsPort;
 		this._inboundSocket = peerConfig.inboundSocket;
+		this._outboundSocket = peerConfig.outboundSocket;
 		this._height = peerConfig.height;
 	}
 	// TODO: Return BANNED when appropriate.
@@ -80,13 +88,28 @@ export class Peer {
 	public get wsPort(): number {
 		return this._wsPort;
 	}
-	/* tslint:disable:promise-function-async prefer-function-over-method no-unused-variable */
-	public async request(data: RPCRequest<any>): Promise<RPCResponse<any>> {
-		// TODO: Resolving and rejecting for testing
-		if (!data) {
-			return Promise.reject(new Error('No data Error'));
-		}
-
-		return Promise.resolve({ data: [] });
+	/* tslint:disable:promise-function-async prefer-function-over-method no-unused-variable ban-types */
+	public request<T>(packet: P2PRequestPacket<T>): Promise<P2PResponsePacket> {
+		return new Promise<P2PResponsePacket>(
+			(resolve: Function, reject: Function) => {
+				// TODO LATER: Change to LIP protocol format.
+				this._outboundSocket.emit(
+					'rpc-request',
+					{
+						type: '/RPCRequest',
+						procedure: packet.procedure,
+						data: packet.params,
+					},
+					(err: Error | undefined, responseData: unknown) => {
+						if (err) {
+							return reject(err);
+						}
+						resolve({
+							data: responseData,
+						});
+					},
+				);
+			},
+		);
 	}
 }

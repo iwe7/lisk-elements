@@ -16,7 +16,7 @@ import { expect } from 'chai';
 import {
 	NotEnoughPeersError,
 	PeerTransportError,
-	RPCGetPeersFailedError,
+	RPCResponseError,
 } from '../../src';
 
 describe('errors', () => {
@@ -89,13 +89,13 @@ describe('errors', () => {
 	});
 
 	describe('#RPCGetPeersFailed', () => {
-		let rpcGetPeersFailed: RPCGetPeersFailedError;
+		let rpcGetPeersFailed: RPCResponseError;
 		const peerId = '127.0.0.1:5001';
 		const defaultMessage = `Error when fetching peerlist of peer with peer id ${peerId}`;
 		const defaultError = new Error('Peer not available');
 
 		beforeEach(() => {
-			rpcGetPeersFailed = new RPCGetPeersFailedError(
+			rpcGetPeersFailed = new RPCResponseError(
 				defaultMessage,
 				defaultError,
 				peerId,
@@ -104,20 +104,20 @@ describe('errors', () => {
 		});
 
 		describe('should create an error object', () => {
-			it('should create a new instance of RPCGetPeersFailed', () => {
+			it('should create a new instance of RPCResponseError', () => {
 				return expect(rpcGetPeersFailed)
 					.to.be.an('object')
-					.and.be.instanceof(RPCGetPeersFailedError);
+					.and.be.instanceof(RPCResponseError);
 			});
 
-			it('should set error name to `RPCGetPeersFailed`', () => {
-				return expect(rpcGetPeersFailed.name).to.eql('RPCGetPeersFailed');
+			it('should set error name to `RPCResponseError`', () => {
+				return expect(rpcGetPeersFailed.name).to.eql('RPCResponseError');
 			});
 		});
 
 		describe('should set error object properties', () => {
 			beforeEach(() => {
-				rpcGetPeersFailed = new RPCGetPeersFailedError(
+				rpcGetPeersFailed = new RPCResponseError(
 					defaultMessage,
 					defaultError,
 					peerId,
