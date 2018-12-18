@@ -30,7 +30,7 @@ describe('rpc Handler', () => {
 			wsPort: '5001',
 			height: '453453',
 			os: 'windows',
-			version: '1.2.1',
+			version: '1.2.1jhbhjjb',
 		},
 	];
 
