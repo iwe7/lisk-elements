@@ -89,7 +89,7 @@ export class P2P extends EventEmitter {
 	}
 
 	/**
-	 * This is not a declared as a setter because this method will need
+	 * This is not declared as a setter because this method will need
 	 * invoke an async RPC on Peers to give them our new node status.
 	 */
 	public applyNodeStatus(value: P2PNodeStatus): void {
