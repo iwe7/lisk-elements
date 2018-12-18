@@ -13,7 +13,7 @@
  *
  */
 import { expect } from 'chai';
-import { Peer, PeerConfig } from '../../src/peer';
+import { PeerConfig } from '../../src/peer';
 import { helperAllPeersRPC } from '../../src/rpc_handler';
 
 describe('rpc Handler', () => {
@@ -26,7 +26,7 @@ describe('rpc Handler', () => {
 			version: '1.1.1',
 		},
 		{
-			ip: '728.34.00.78',
+			ip: '127.34.00.78',
 			wsPort: '5001',
 			height: '453453',
 			os: 'windows',
@@ -35,14 +35,17 @@ describe('rpc Handler', () => {
 	];
 
 	let newlyCreatedPeers = peersFromResponse.map(
-		peer =>
-			new Peer({
+		peer => {
+			const peerWithConfig: PeerConfig = {
 				ipAddress: peer.ip,
 				wsPort: +peer.wsPort,
 				height: +peer.height,
 				os: peer.os,
 				version: peer.version,
-			}),
+			}
+
+			return peerWithConfig;
+		}
 	);
 
 	describe('#getPeersRPCHandler', () => {
@@ -68,6 +71,7 @@ describe('rpc Handler', () => {
 
 		it('should return an array of instantiated peers', () => {
 			peersRPCHandler = helperAllPeersRPC(undefined);
+
 			return expect(peersRPCHandler)
 				.to.be.an('array')
 				.eql([]);

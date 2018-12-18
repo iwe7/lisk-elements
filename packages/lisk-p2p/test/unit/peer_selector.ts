@@ -30,7 +30,6 @@ describe('peer selector', () => {
 				_height: 645982,
 				_id: '192.28.138.1:5006',
 				_inboundSocket: undefined,
-				_outboundSocket: undefined,
 			},
 			{
 				_ipAddress: '18.28.48.1',
@@ -38,7 +37,6 @@ describe('peer selector', () => {
 				_height: 645980,
 				_id: '18.28.48.1:5008',
 				_inboundSocket: undefined,
-				_outboundSocket: undefined,
 			},
 			{
 				_ipAddress: '178.21.90.199',
@@ -46,7 +44,6 @@ describe('peer selector', () => {
 				_height: 645980,
 				_id: '178.21.90.199:5001',
 				_inboundSocket: undefined,
-				_outboundSocket: undefined,
 			},
 		];
 
