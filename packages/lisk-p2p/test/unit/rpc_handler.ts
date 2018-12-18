@@ -13,21 +13,21 @@
  *
  */
 import { expect } from 'chai';
-import { Peer } from '../../src/peer';
-import { getPeersRPCHandler } from '../../src/rpc_handler';
+import { Peer, PeerConfig } from '../../src/peer';
+import { helperAllPeersRPC } from '../../src/rpc_handler';
 
 describe('rpc Handler', () => {
 	let peersFromResponse = [
 		{
 			ip: '12.45.12.12',
-			wsPort: 5002,
-			height: 121323,
+			wsPort: '5002',
+			height: '121323',
 			os: 'ubuntu',
 		},
 		{
 			ip: '728.34.00.78',
-			wsPort: 5001,
-			height: 453453,
+			wsPort: '5001',
+			height: '453453',
 			os: 'windows',
 		},
 	];
@@ -36,20 +36,19 @@ describe('rpc Handler', () => {
 		peer =>
 			new Peer({
 				ipAddress: peer.ip,
-				wsPort: peer.wsPort,
-				height: peer.height,
+				wsPort: +peer.wsPort,
+				height: +peer.height,
 				os: peer.os,
-				id: `${peer.ip}:${peer.wsPort}`,
 			}),
 	);
 
 	describe('#getPeersRPCHandler', () => {
-		let peersRPCHandler: ReadonlyArray<Peer>;
+		let peersRPCHandler: ReadonlyArray<PeerConfig>;
 		let response: unknown;
 
 		beforeEach(async () => {
 			response = { peers: peersFromResponse };
-			peersRPCHandler = getPeersRPCHandler(response);
+			peersRPCHandler = helperAllPeersRPC(response);
 		});
 
 		it('should return an array', () => {
@@ -65,14 +64,14 @@ describe('rpc Handler', () => {
 		});
 
 		it('should return an array of instantiated peers', () => {
-			peersRPCHandler = getPeersRPCHandler(undefined);
+			peersRPCHandler = helperAllPeersRPC(undefined);
 			return expect(peersRPCHandler)
 				.to.be.an('array')
 				.eql([]);
 		});
 
 		it('should return an array of instantiated peers', () => {
-			peersRPCHandler = getPeersRPCHandler('string value');
+			peersRPCHandler = helperAllPeersRPC('string value');
 
 			return expect(peersRPCHandler)
 				.to.be.an('array')
