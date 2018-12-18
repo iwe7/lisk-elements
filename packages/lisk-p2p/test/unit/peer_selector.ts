@@ -47,6 +47,10 @@ describe('peer selector', () => {
 			},
 		];
 
+		afterEach(() => {
+			peerList.forEach(peer => peer.disconnect());
+		});
+
 		describe('get list of n number of good peers', () => {
 			beforeEach(async () => {
 				peerList = initializePeerList();

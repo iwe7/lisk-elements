@@ -26,6 +26,10 @@ describe('peer', () => {
 
 	const defaultPeer = new Peer(defaultPeerConfig);
 
+	afterEach(() => {
+		defaultPeer.disconnect();
+	});
+
 	describe('#constructor', () => {
 		it('should be an object', () => {
 			return expect(defaultPeer).to.be.an('object');

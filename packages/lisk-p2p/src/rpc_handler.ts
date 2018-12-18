@@ -24,7 +24,7 @@ interface RPCPeerListResponse {
 	readonly success?: boolean; // Could be used in future
 }
 
-export const helperAllPeersRPC = (
+export const processPeerListFromResponse = (
 	response: unknown,
 ): ReadonlyArray<PeerConfig> => {
 	if (!response) {
@@ -50,7 +50,9 @@ export const getAllPeers = async (peers: ReadonlyArray<Peer>) =>
 		peers.map(async peer =>
 			peer
 				.request<void>({ procedure: GET_ALL_PEERS_LIST_RPC })
-				.then((response: P2PResponsePacket) => helperAllPeersRPC(response.data))
+				.then((response: P2PResponsePacket) =>
+					processPeerListFromResponse(response.data),
+				)
 				// This will be used to log errors
 				.catch(
 					(error: Error) =>
