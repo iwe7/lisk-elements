@@ -23,12 +23,14 @@ describe('rpc Handler', () => {
 			wsPort: '5002',
 			height: '121323',
 			os: 'ubuntu',
+			version: '1.1.1',
 		},
 		{
 			ip: '728.34.00.78',
 			wsPort: '5001',
 			height: '453453',
 			os: 'windows',
+			version: '1.2.1',
 		},
 	];
 
@@ -39,6 +41,7 @@ describe('rpc Handler', () => {
 				wsPort: +peer.wsPort,
 				height: +peer.height,
 				os: peer.os,
+				version: peer.version,
 			}),
 	);
 
